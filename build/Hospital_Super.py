@@ -21,21 +21,18 @@ class Hospital:
 
     def mainRoleSuper(self,username):
         self.user = username
-        # self.logout_icon = PhotoImage(file=r'C:\Users\bao.le\Pycode\Do_An\image\super.png')
-        script_directory = os.path.dirname(os.path.abspath(__file__))
-
-        # Load and resize the icon image
-        image_path = os.path.join(script_directory, "image", "super.png")
-        print(image_path)  # Check the printed path in the console
-
         try:
             original_image = Image.open(r'C:\Users\bao.le\Pycode\Do_An\image\super.png')
+            original_image1 = Image.open(r'C:\Users\bao.le\Pycode\Do_An\image\prescription.png')
         except Exception as e:
             print(f"Error opening image: {e}")
             raise  # Raising the exception again to stop further execution
 
         resized_image = original_image.resize((60, 60), Image.LANCZOS)
         self.logout_icon = ImageTk.PhotoImage(resized_image)
+
+        resized_image1 = original_image1.resize((380, 300), Image.LANCZOS)
+        self.main_icon = ImageTk.PhotoImage(resized_image1)
 
 
 
@@ -51,21 +48,24 @@ class Hospital:
         Dataframe = Frame(self.root, bd=20, relief=RIDGE)
         Dataframe.place(x=0, y=130, width=1900, height=850)
 
-        DataMedicine = LabelFrame(Dataframe, bd=10, relief=RAISED, padx=5,
+        DataMedicine = LabelFrame(Dataframe, bd=4, relief=RAISED, padx=5,
                                    font=("time new roman", 12, "bold"), text="Medicine Information")
         DataMedicine.place(x=2, y=5, width=450, height=350)
         
-        DataNotes = LabelFrame(Dataframe, bd=10, relief=RAISED, padx=5,
+        DataNotes = LabelFrame(Dataframe, bd=4, relief=RAISED, padx=5,
                                    font=("time new roman", 12, "bold"), text="Notes")
         DataNotes.place(x=460, y=5, width=470, height=350)
 
-        DataPatients = LabelFrame(Dataframe, bd=10, relief=RAISED, padx=5,
+        DataPatients = LabelFrame(Dataframe, bd=4, relief=RAISED, padx=5,
                                    font=("time new roman", 12, "bold"), text="Patient Information")
-        DataPatients.place(x=940, y=5, width=450, height=350)
+        DataPatients.place(x=940, y=5, width=470, height=350)
 
-        DataFrameRight = LabelFrame(Dataframe, bd=10, relief=RAISED, padx=5,
-                                    font=("time new roman", 12, "bold"), text="Prescription")
-        DataFrameRight.place(x=1400, y=5, width=460, height=350)
+        DataFrameRight = LabelFrame(Dataframe, bd=4, relief=FLAT, padx=5,
+                                    font=("time new roman", 12, "bold"))
+        DataFrameRight.place(x=1420, y=5, width=420, height=350)
+
+        image_label = Label(DataFrameRight, image=self.main_icon, bd=0 )
+        image_label.place(x=10, y=10)
 
         # =================== Buttons====================
 
@@ -80,24 +80,24 @@ class Hospital:
 
         # ===================Details frame ====================
 
-        DetailsFrame = LabelFrame(Dataframe, bd=10, relief=RIDGE, font=("time new roman", 12, "bold"), text="Prescription History")
+        DetailsFrame = LabelFrame(Dataframe, bd=4, relief=RIDGE, font=("time new roman", 12, "bold"), text="Prescription History")
         DetailsFrame.place(x=0, y=620, width=1870, height=190)
 
         # ===================Patients List frame ====================
 
-        PatientListFrame = LabelFrame(Dataframe, bd=10, relief=RIDGE, font=("time new roman", 12, "bold"), text="Patient List")
+        PatientListFrame = LabelFrame(Dataframe, bd=4, relief=RIDGE, font=("time new roman", 12, "bold"), text="Patient List")
         PatientListFrame.place(x=935, y=360, width=930, height=180)
 
         # ===================Medicine List  frame ====================
 
-        MedicineListFrame = LabelFrame(Dataframe, bd=10, relief=RIDGE, font=("time new roman", 12, "bold"), text="Medicine List")
+        MedicineListFrame = LabelFrame(Dataframe, bd=4, relief=RIDGE, font=("time new roman", 12, "bold"), text="Medicine List")
         MedicineListFrame.place(x=0, y=360, width=930, height=180)
 
         # =====================DataMedicine======================
 
         medicineNo = Label(DataMedicine, font=("arial", 12, "bold"), text="Medicine No:", padx=2,pady=6)
         medicineNo.grid(row=0, column=0, sticky=W)
-        self.txtMedicineNo = Entry(DataMedicine, font=("arial", 13, "bold"), width=30)
+        self.txtMedicineNo = Entry(DataMedicine, font=("arial", 13, "bold"), width=18)
         self.txtMedicineNo.grid(row=0, column=1, sticky=W)
 
         medicineType= Label(DataMedicine, text="Type Of Medicine", font=("arial", 12, "bold"), padx=2, pady=6)
@@ -168,8 +168,9 @@ class Hospital:
 
         lblPatientId = Label(DataPatients, font=("arial", 12, "bold"), text="Patient Id:", padx=2, pady=6)
         lblPatientId.grid(row=0, column=0, sticky=W)
-        self.txtPatientId = Entry(DataPatients, font=("arial", 12, "bold"), width=30)
+        self.txtPatientId = Entry(DataPatients, font=("arial", 12, "bold"), width=18)
         self.txtPatientId.grid(row=0, column=1, sticky=W)
+
         
         lblPatientPass = Label(DataPatients, font=("arial", 12, "bold"), text="Patient Password:", padx=2, pady=6)
         lblPatientPass.grid(row=1, column=0, sticky=W)
@@ -202,9 +203,6 @@ class Hospital:
         self.txtuserRole["values"] = ("Super", "Admin", "Agent")
         self.txtuserRole.grid(row=6, column=1, sticky=W)
 
-        # ===============================DataFrameRight==========================
-        self.txtPrescription = Text(DataFrameRight, font=("arial", 12, "bold"), width=45, height=16, padx=2, pady=6)
-        self.txtPrescription.grid(row=0, column=0)
 
         # ================================Buttons Presciption===========================
 
@@ -221,7 +219,7 @@ class Hospital:
                            padx=2, pady=6, command=self.iUpdate_presciption)
         btnUpdate.grid(row=0, column=2, padx=2)
 
-        btnClear = Button(ButtonPrescriptionFrame, text="Clear", bg="gray", fg="white", font=("arial", 12, "bold"), width=29,
+        btnClear = Button(ButtonPrescriptionFrame, text="Clear", bg="GoldenRod", fg="white", font=("arial", 12, "bold"), width=29,
                           padx=2, pady=6, command=self.iclear_presciption_history)
         btnClear.grid(row=0, column=3, padx=2)
 
@@ -229,12 +227,16 @@ class Hospital:
                            padx=2, pady=6, command=self.idelete_presciption_history)
         btnDelete.grid(row=0, column=4, padx=2)
 
-        btnExit = Button(ButtonPrescriptionFrame, text=f"Logout", bg="GoldenRod", fg="white", font=("arial", 12, "bold"), width=29, padx=2,
+        btnExit = Button(ButtonPrescriptionFrame, text="Logout", bg="gray", fg="white", font=("arial", 12, "bold"), width=29, padx=2,
                          pady=6, command=self.iLogout)
         btnExit.grid(row=0, column=5, padx=2)
 
 
         # ================================Buttons ButtonMedicineFrame===========================
+
+        btnMedicineSearch = Button(DataMedicine, text="Search", bg="green", fg="white",
+                                     font=("arial", 12, "bold"), width=8, padx=2,command=self.Medicine_search_and_select_row)
+        btnMedicineSearch.grid(row=0, column=1, sticky=E)
 
         btnMedicineCreate = Button(ButtonMedicineFrame, text="Create", bg="green", fg="white",
                                      font=("arial", 12, "bold"), width=10, padx=2, pady=2, command=self.iMedicine_Create)
@@ -247,7 +249,9 @@ class Hospital:
         btnMedicineDelete.grid(row=0, column=2, padx=6)
 
         # ================================Buttons ButtonPatientFrame===========================
-
+        btnPatientSearch = Button(DataPatients, text="Search", bg="green", fg="white",
+                                     font=("arial", 12, "bold"), width=8, padx=2, command=self.Patient_search_and_select_row)
+        btnPatientSearch.grid(row=0, column=1, sticky=E)
 
         btnPatientCreate = Button(ButtonPatientFrame, text="Create", bg="green", fg="white",
                                      font=("arial", 12, "bold"), width=10, padx=2, pady=2 ,command=self.iPatient_Create)
@@ -266,8 +270,7 @@ class Hospital:
         scroll_y = ttk.Scrollbar(DetailsFrame, orient=VERTICAL)
         # Create Treeview widget
         self.hospital_table = ttk.Treeview(DetailsFrame, columns=(
-        "nameofablets", "ref", "dose", "nooftablets", "lot", "issuedate", "expdate", "dailydose", "storage",
-        "nhsnumber", "pname", "dob", "address"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        "presciptionno", "medicineno", "username", "furtherinfo", "bloodpressure", "storageadvice", "dose", "dailydose"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
         # Pack the scrollbars
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
@@ -276,25 +279,19 @@ class Hospital:
         scroll_x.config(command=self.hospital_table.xview)
         scroll_y.config(command=self.hospital_table.yview)
 
-        self.hospital_table.heading("nameofablets", text="Name Of Tablets")
-        self.hospital_table.heading("ref", text="Reference No.")
+        self.hospital_table.heading("presciptionno", text="Presciption No")
+        self.hospital_table.heading("medicineno", text="Medicine No.")
+        self.hospital_table.heading("username", text="Patient Id")
+        self.hospital_table.heading("furtherinfo", text="Further Info")
+        self.hospital_table.heading("bloodpressure", text="Blood Pressure")
+        self.hospital_table.heading("storageadvice", text="Storage Advice")
         self.hospital_table.heading("dose", text="Dose")
-        self.hospital_table.heading("nooftablets", text="No Of Tablets")
-        self.hospital_table.heading("lot", text="Lot")
-        self.hospital_table.heading("issuedate", text="Issue Date")
-        self.hospital_table.heading("expdate", text="Exp Date")
         self.hospital_table.heading("dailydose", text="Daily Dose")
-        self.hospital_table.heading("storage", text="Storage")
-        self.hospital_table.heading("nhsnumber", text="NHS Number")
-        self.hospital_table.heading("pname", text="Patient Name")
-        self.hospital_table.heading("dob", text="DOB")
-        self.hospital_table.heading("address", text="Address")
 
         self.hospital_table["show"] = "headings"
         self.hospital_table.pack(fill=BOTH, expand=1)
 
-        for col in ("nameofablets", "ref", "dose", "nooftablets", "lot", "issuedate", "expdate", "dailydose", "storage",
-                    "nhsnumber", "pname", "dob", "address"):
+        for col in ("presciptionno", "medicineno", "username", "furtherinfo", "bloodpressure", "storageadvice", "dose", "dailydose"):
             self.hospital_table.column(col, width=100)
         self.hospital_table.bind("<ButtonRelease-1>", self.get_cursor_prescription_history)
         self.fatch_data_prescription_history()
@@ -367,30 +364,25 @@ class Hospital:
         # ======================Functinality Declration=====================
 
     def iPrescription_Create(self):
-        if self.medicineType.get()=="" or self.txtMedicineNo.get()=="":
+        if self.txtMedicineNo.get()=="" or self.txtPrescriptionNo.get()=="" or self.txtPatientId.get()=="":
             messagebox.showerror("Error","All fields are required")
         else:
             try:
                 SqlSever = MSSQLConnection()
                 SqlSever.connect()
-                Query1 = ('INSERT INTO hospital (Nameoftablets , Reference_No , dose ,Numbersoftablets, lot, issuedate, expdate,dailydose,storage,nhsnumber ,patientname ,DOB ,patientaddress ) VALUES '
-                              '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
-                # Query1 = ('INSERT INTO hospital VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+                Query1 = (' INSERT INTO presciptions (presciptionno, medicineno, username, furtherinfo, bloodpressure, storageadvice ,dose, daillydose ) VALUES '
+                              '(?, ?, ?, ?, ?, ?, ?, ?)')
                 values =(
-                    self.medicineType.get(),
-                    self.txtMedicineNo.get(),self.txtDose.get(),
-                    self.medicineName.get(),
-                    self.txtLot.get(),
-                    self.txtissueDate.get(),
-                    self.txtExpDate.get(),
-                    self.txtDailyDose.get(),
+                    self.txtPrescriptionNo.get(),
+                    self.txtMedicineNo.get(),
+                    self.txtPatientId.get(),
+                    self.txtFurtherInfo.get(),
+                    self.txtBloodPressure.get(),
                     self.txtStorage.get(),
-                    self.txtPhoneNumber.get(),
-                    self.txtPatientname.get(),
-                    self.txtDateOfBirth.get(),
-                    self.txtPatientAddress.get())
+                    self.txtDose.get(),
+                    self.txtDailyDose.get())
                 SqlSever.insert(Query1, values)
-                messagebox.showinfo("Prescription", "Create Success")
+                messagebox.showinfo("Prescription", "Create Prescription Success")
             except Exception as e:
                 messagebox.showerror("Error",f"Error: {e}")
             finally:
@@ -449,34 +441,28 @@ class Hospital:
                 self.iclear_patient()
 
     def iUpdate_presciption(self):
-        if self.medicineType.get() == "" or self.txtMedicineNo.get() == "":
+        if self.txtMedicineNo.get()=="" or self.txtPrescriptionNo.get()=="" or self.txtPatientId.get()=="":
             messagebox.showerror("Error", "All fields are required")
         else:
             try:
                 SqlSever = MSSQLConnection()
                 SqlSever.connect()
                 Query1 = (
-                    'UPDATE hospital SET Nameoftablets= ? , dose=? ,Numbersoftablets= ?, lot= ?, issuedate= ?, expdate = ?,dailydose= ?,storage= ?,nhsnumber= ? ,patientname= ? ,DOB= ? ,patientaddress= ? '
-                    'WHERE Reference_No = ?'
+                    'UPDATE presciptions SET medicineno= ? , username=? ,furtherinfo= ?, bloodpressure= ?, storageadvice= ?, dose = ?,daillydose= ? '
+                    'WHERE presciptionno = ?'
                     )
-                # Query1 = ('INSERT INTO hospital VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
                 values = (
-                    self.medicineType.get(),
-                    self.txtDose.get(),
-                    self.medicineName.get(),
-                    self.txtLot.get(),
-                    self.txtissueDate.get(),
-                    self.txtExpDate.get(),
-                    self.txtDailyDose.get(),
-                    self.txtStorage.get(),
-                    self.txtPhoneNumber.get(),
-                    self.txtPatientname.get(),
-                    self.txtDateOfBirth.get(),
-                    self.txtPatientAddress.get(),
                     self.txtMedicineNo.get(),
+                    self.txtPatientId.get(),
+                    self.txtFurtherInfo.get(),
+                    self.txtBloodPressure.get(),
+                    self.txtStorage.get(),
+                    self.txtDose.get(),
+                    self.txtDailyDose.get(),
+                    self.txtPrescriptionNo.get()
                 )
                 SqlSever.update(Query1, values)
-                messagebox.showinfo("Success", "Update Success")
+                messagebox.showinfo("Success", "Update Prescription  Success")
             except Exception as e:
                 messagebox.showerror("Error", f"Error: {e}")
             finally:
@@ -545,7 +531,7 @@ class Hospital:
         try:
             SqlSever = MSSQLConnection()
             SqlSever.connect()
-            Query1 = ('SELECT * FROM hospital ')
+            Query1 = ('SELECT * FROM presciptions ')
             rows = SqlSever.query(Query1)
             if len(rows)!=0:
                 self.hospital_table.delete(*self.hospital_table.get_children())
@@ -597,35 +583,27 @@ class Hospital:
         content = self.hospital_table.item(cursor_row)
         row = content["values"]
 
-        self.medicineType.delete(0, END)
+        self.txtPrescriptionNo.delete(0, END)
         self.txtMedicineNo.delete(0, END)
-        self.txtDose.delete(0, END)
-        self.medicineName.delete(0, END)
-        self.txtLot.delete(0, END)
-        self.txtissueDate.delete(0, END)
-        self.txtExpDate.delete(0, END)
-        self.txtDailyDose.delete(0, END)
+        self.txtPatientId.delete(0, END)
+        self.txtFurtherInfo.delete(0, END)
+        self.txtBloodPressure.delete(0, END)
         self.txtStorage.delete(0, END)
-        self.txtPhoneNumber.delete(0, END)
-        self.txtPatientname.delete(0, END)
-        self.txtDateOfBirth.delete(0, END)
-        self.txtPatientAddress.delete(0, END)
+        self.txtDose.delete(0, END)
+        self.txtDailyDose.delete(0, END)
 
         # Insert values into entry widgets
-        self.medicineType.set(row[0])
-        self.txtMedicineNo.insert(0, row[1])
+        self.txtPrescriptionNo.insert(0, row[0])
         # self.txtMedicineNo.config(state=DISABLED)
-        self.txtDose.insert(0, row[2])
-        self.medicineName.insert(0, row[3])
-        self.txtLot.insert(0, row[4])
-        self.txtissueDate.insert(0, row[5])
-        self.txtExpDate.insert(0, row[6])
+        self.txtMedicineNo.insert(0, row[1])
+        self.txtPatientId.insert(0, row[2])
+        self.txtFurtherInfo.insert(0, row[3])
+        self.txtBloodPressure.insert(0, row[4])
+        self.txtStorage.insert(0, row[5])
+        self.txtDose.insert(0, row[6])
         self.txtDailyDose.insert(0, row[7])
-        self.txtStorage.insert(0, row[8])
-        self.txtPhoneNumber.insert(0, row[9])
-        self.txtPatientname.insert(0, row[10])
-        self.txtDateOfBirth.insert(0, row[11])
-        self.txtPatientAddress.insert(0, row[12])
+        self.Medicine_search_and_select_row()
+        self.Patient_search_and_select_row()
 
     def get_cursor_medicine_list(self, event):
         cursor_row = self.MedicineListTable.focus()
@@ -671,27 +649,36 @@ class Hospital:
         self.txtPatientAddress.insert(0, row[3])
         self.txtuserRole.set( row[6])
     def iPrescription(self):
-        if self.medicineType.get() and self.txtMedicineNo.get():
-            self.txtPrescription.delete('1.0', 'end')
+        from PrescriptionDetail import Prescription
 
-        self.txtPrescription.insert(END,"Name Of Tablets :\t\t\t"+self.medicineType.get()+"\n")
-        self.txtPrescription.insert(END, "Reference No :\t\t\t" + self.txtMedicineNo.get() + "\n")
-        self.txtPrescription.insert(END, "Dose :\t\t\t" + self.txtDose.get() + "\n")
-        self.txtPrescription.insert(END, "Number Of Tablets :\t\t\t" + self.medicineName.get() + "\n")
-        self.txtPrescription.insert(END, "Lot :\t\t\t" + self.txtLot.get() + "\n")
-        self.txtPrescription.insert(END, "Issue Date :\t\t\t" + self.txtissueDate.get() + "\n")
-        self.txtPrescription.insert(END, "Exp Date :\t\t\t" + self.txtExpDate.get() + "\n")
-        self.txtPrescription.insert(END,"Daily Dose :\t\t\t"+self.txtDailyDose.get()+"\n")
-        self.txtPrescription.insert(END, "Side Effect :\t\t\t" + self.txtSideEffect.get() + "\n")
-        self.txtPrescription.insert(END, "Funther Information :\t\t\t" + self.txtFurtherInfo.get() + "\n")
-        self.txtPrescription.insert(END, "Blood Pressure :\t\t\t" + self.txtBloodPressure.get() + "\n")
-        self.txtPrescription.insert(END, "Store Advice :\t\t\t" + self.txtStorage.get() + "\n")
-        self.txtPrescription.insert(END, "Medicaion :\t\t\t" + self.txtMedicine.get() + "\n")
-        self.txtPrescription.insert(END, "Patient Id :\t\t\t" + self.txtPatientId.get() + "\n")
-        self.txtPrescription.insert(END, "NHS Number :\t\t\t" + self.txtPhoneNumber.get() + "\n")
-        self.txtPrescription.insert(END, "Patient Name :\t\t\t" + self.txtPatientname.get() + "\n")
-        self.txtPrescription.insert(END, "Date Of Birth :\t\t\t" + self.txtDateOfBirth.get() + "\n")
-        self.txtPrescription.insert(END, "Patient Address :\t\t\t" + self.txtPatientAddress.get() + "\n")
+        MedicineNo: str = self.txtMedicineNo.get()
+        Medicinetype: str = self.medicineType.get()
+        MedicineName: str = self.medicineName.get()
+        Medicinelot: str = self.txtLot.get()
+        MedicineissueDate: str = self.txtissueDate.get()
+        MedicineExpDate: str = self.txtExpDate.get()
+        MedicineSideEffect: str = self.txtSideEffect.get()
+     # --------------Note---------
+
+        NotePrescriptionNo: str = self.txtPrescriptionNo.get()
+        NoteFurther: str = self.txtFurtherInfo.get()
+        NoteBlood: str = self.txtBloodPressure.get()
+        NoteStorage: str = self.txtStorage.get()
+        NoteDose: str = self.txtDose.get()
+        NoteDaillyDose: str = self.txtDailyDose.get()
+
+        PaientID: str = self.txtPatientId.get()
+        PatientPhone: str = self.txtPhoneNumber.get()
+        PatientName: str = self.txtPatientname.get()
+        PatientBirth: str = self.txtDateOfBirth.get()
+        PatientAddress: str = self.txtPatientAddress.get()
+
+
+        prescription_instance = Prescription(MedicineNo,Medicinetype,MedicineName,Medicinelot,MedicineissueDate,MedicineExpDate,MedicineSideEffect,
+                                             NotePrescriptionNo,NoteFurther,NoteBlood,NoteStorage,NoteDose,NoteDaillyDose,
+                                             PaientID,PatientPhone,PatientName,PatientBirth,PatientAddress)
+        prescription_instance.Detail()
+
 
     def idelete_presciption_history(self):
 
@@ -704,8 +691,8 @@ class Hospital:
                 try:
                     SqlSever = MSSQLConnection()
                     SqlSever.connect()
-                    Query1 = 'DELETE FROM hospital WHERE Reference_No = ?'
-                    values = self.txtMedicineNo.get()
+                    Query1 = 'DELETE FROM presciptions WHERE presciptionno = ?'
+                    values = self.txtPrescriptionNo.get()
                     SqlSever.delete(Query1, values)
                     messagebox.showinfo("Prescription", "DELETE Success")
                 except Exception as e:
@@ -799,6 +786,59 @@ class Hospital:
         self.txtPatientAddress.delete(0, END)
         self.txtuserRole.set("")
 
+    def Medicine_search_and_select_row(self):
+        if (self.txtMedicineNo.get() != ""):
+            medicineNo = str(self.txtMedicineNo.get())
+            search_value = medicineNo
+            check = 0
+
+            for child in self.MedicineListTable.get_children():
+                values = self.MedicineListTable.item(child, 'values')
+
+                if search_value in values:
+                    check+=1
+                    print(search_value,values)
+                    # Select the row
+                    self.MedicineListTable.selection_set(child)
+
+                    # Focus on the selected row
+                    self.MedicineListTable.focus(child)
+
+                    # Scroll to make the selected row visible
+                    self.MedicineListTable.see(child)
+
+                    self.get_cursor_medicine_list(self)
+
+                    break
+            if check == 0:
+                messagebox.showinfo("Search Medicine", f"Not found {search_value.upper()}")
+        else:
+            messagebox.showwarning("Search Medicine", "Please Input Medicine No")
+    def Patient_search_and_select_row(self):
+        if (self.txtPatientId.get() != ""):
+            PatientId = str(self.txtPatientId.get())
+            search_value = PatientId
+            check = 0
+            for child in self.PatientListTable.get_children():
+                values = self.PatientListTable.item(child, 'values')
+
+                if search_value in values:
+                    check += 1
+                    # Select the row
+                    self.PatientListTable.selection_set(child)
+
+                    # Focus on the selected row
+                    self.PatientListTable.focus(child)
+
+                    # Scroll to make the selected row visible
+                    self.PatientListTable.see(child)
+
+                    self.get_cursor_patient_list(self)
+                    break
+            if check == 0:
+                messagebox.showinfo("Search Medicine", f"Not found {search_value.upper()}")
+        else:
+            messagebox.showwarning("Search Patient", "Please Input Patient Id")
     def iLogout(self):
         iLogout = messagebox.askyesno("Hospital Management System","Confirm you want to logout")
         if iLogout > 0:

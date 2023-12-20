@@ -34,5 +34,23 @@ DROP COLUMN phone;
 INSERT INTO medicines (medicineno, typeofmedicine, medicinename, lotno, issuedate, expdate ,side)
 VALUES ('M01' , 'tablet' , 'Vitamin A','L001','2023-06-11','2024-06-11','dizziness,fatigue')
 
-select * from medicines
+select * from presciptions
 
+CREATE TABLE presciptions (
+    presciptionno NVARCHAR(255) PRIMARY KEY,
+	medicineno NVARCHAR(255),
+	username VARCHAR(255),
+    furtherinfo VARCHAR(255),
+	bloodpressure VARCHAR(255),
+	storageadvice VARCHAR(255),
+	dose VARCHAR(255),
+	daillydose VARCHAR(255),
+	FOREIGN KEY (medicineno) REFERENCES medicines(medicineno),
+	FOREIGN KEY (username) REFERENCES users(username),
+);
+
+INSERT INTO presciptions (presciptionno, medicineno, username, furtherinfo, bloodpressure, storageadvice ,dose, daillydose )
+VALUES ('P02' , 'M01' , 'bao.le','further info','blood pressure','storage advice','dose','dailly dose')
+
+select presciptions.medicineno, * from presciptions
+inner join medicines ON presciptions.medicineno = medicines.medicineno
