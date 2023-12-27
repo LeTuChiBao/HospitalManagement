@@ -22,14 +22,10 @@ class Hospital:
     def mainRoleAdmin(self,username):
         self.user = username
         try:
-            original_image = Image.open(r'C:\Users\bao.le\Pycode\Do_An\image\admin.png')
             original_image1 = Image.open(r'C:\Users\bao.le\Pycode\Do_An\image\admin.png')
         except Exception as e:
             print(f"Error opening image: {e}")
             raise  # Raising the exception again to stop further execution
-
-        resized_image = original_image.resize((60, 60), Image.LANCZOS)
-        self.logout_icon = ImageTk.PhotoImage(resized_image)
 
         resized_image1 = original_image1.resize((300, 300), Image.LANCZOS)
         self.main_icon = ImageTk.PhotoImage(resized_image1)
@@ -39,9 +35,6 @@ class Hospital:
                          font=("time new roman", 50, "bold"))
         lbltitle.pack(side=TOP, fill=X)
 
-        img_label = Label(lbltitle, text=f"{self.user.upper()} ", image=self.logout_icon,
-                          compound="right", bg="white", fg="GoldenRod", font=("Arial", 20, "bold"), padx=2, pady=6)
-        img_label.pack(side=RIGHT)
         # =================Dataframe=====================
         Dataframe = Frame(self.root, bd=20, relief=RIDGE)
         Dataframe.place(x=0, y=130, width=1900, height=850)
