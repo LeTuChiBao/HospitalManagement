@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import END
 from PIL import Image, ImageTk
 import os
+from tkinter import messagebox
 class Prescription:
     def __init__(self,MedicineNo,Medicinetype,MedicineName,Medicinelot,MedicineissueDate,MedicineExpDate,MedicineSideEffect,
                  NotePrescriptionNo,NoteFurther,NoteBlood,NoteStorage,NoteDose,NoteDaillyDose,
@@ -68,7 +69,7 @@ class Prescription:
         # ================================Buttons===========================
 
         btnPrintPrescription = Button(ButtonFrame, text="Print", bg="green", fg="white", font=("arial", 12, "bold"),
-                                 width=23, padx=2, pady=6,command=self.loaddata)
+                                 width=23, padx=2, pady=6,command=self.print)
         btnPrintPrescription.grid(row=0, column=0, padx=4 )
 
         btnCancel = Button(ButtonFrame, text="Cancel", bg="gray", fg="white",
@@ -109,6 +110,11 @@ class Prescription:
 
     def cancel(self):
         self.root.destroy()
+
+    def print(self):
+        messagebox.showinfo("Print Success", "Your Prescription print success!!!")
+        self.root.destroy()
+
 
 if __name__ == '__main__':
     a = Prescription("2113","2113","2113","2113","2113""2113","2113""2113","2113",

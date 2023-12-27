@@ -191,11 +191,11 @@ class LoginWindow:
                 else:
                     checkRole = result[0][-1]
                     if checkRole == 'Admin':
-                        print(checkRole)
+                        self.AdminPage()
                     elif checkRole == 'Super':
                         self.SupperPage()
                     elif checkRole == 'Agent':
-                        print('Agent: '+ checkRole)
+                        self.AgentPage()
                     else:
                         messagebox.showerror("Not Support", f"Not Support Role: {checkRole}")
             except Exception as e:
@@ -214,6 +214,20 @@ class LoginWindow:
         from Hospital_Super import Hospital
         openUIRoleSuper = Hospital()
         openUIRoleSuper.mainRoleSuper(username)
+
+    def AdminPage(self):
+        username = self.entry_1.get()
+        self.window.destroy()
+        from Hospital_Admin import Hospital
+        openUIAdmin = Hospital()
+        openUIAdmin.mainRoleAdmin(username)
+
+    def AgentPage(self):
+        username = self.entry_1.get()
+        self.window.destroy()
+        from Hospital_Agent import Hospital
+        openUIAgent = Hospital()
+        openUIAgent.mainRoleAgent(username)
 
 if __name__ == '__main__':
     uilogin = LoginWindow()
